@@ -64,6 +64,14 @@
 
         <input type="Submit">
     </form>
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Upload a CSV File:</label>
+            <input type="file" id="file" name="file" accept=".csv, .xlsx, .xls">
+            <br><br>
+            <button type="Submit File">Upload File</button>
+        </form>
+    </div>
 </body>
 
 </html>
