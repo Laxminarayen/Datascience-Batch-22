@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 #Load the model 
-model = joblib.load("pipe.pkl")
+model = joblib.load("Datascience-Batch-22/StreamLit-Deployment/pipe.pkl")
 
 #Function to make predictions 
 def predict(data):
