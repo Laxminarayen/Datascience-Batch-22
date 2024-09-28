@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Prediction</title>
+</head>
+
+<body>
+    <h1>Car selling Price Prediction!</h1>
+    <h3>Please enter the values</h3>
+    <form action="/predict" method="post">
+        <div>
+            <label for="Car_Name">CarName:</label>
+            <input type="text" name='Car_Name' id="Car_Name">
+        </div>
+        <div>
+            <label for="Year">Year:</label>
+            <input type="number" name='Year' id="Year">
+        </div>
+        <div>
+            <label for="Present_Price">Current Prices:</label>
+            <input type="number" step="any" name='Present_Price' id="Present_Price">
+        </div>
+
+        <div>
+            <label for="Kms_Driven">KMS Driven:</label>
+            <input type="number" name='Kms_Driven' id="Kms_Driven">
+        </div>
+        <div>
+            <label for="Fuel_Type">Choose a type:</label>
+
+            <select name="Fuel_Type" id="Fuel_Type">
+                <option value="petrol">Petrol</option>
+                <option value="diesel">Diesel</option>
+                <option value="cng">CNG</option>
+            </select>
+
+        </div>
+        <div>
+            <label for="Seller_Type">Choose a seller type:</label>
+
+            <select name="Seller_Type" id="Seller_Type">
+                <option value="dealer">Dealer</option>
+                <option value="individual">individual</option>
+            </select>
+
+        </div>
+        <div>
+            <label for="Transmission">Choose a transmission type:</label>
+
+            <select name="Transmission" id="Transmission">
+                <option value="manual">Manual</option>
+                <option value="automatic">Automatic</option>
+            </select>
+
+        </div>
+        <div>
+            <label for="Owner">Owner:</label>
+            <input type="number" name='Owner' id="Owner">
+        </div>
+
+        <input type="Submit">
+    </form>
+    <div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Upload a CSV File:</label>
+            <input type="file" id="file" name="file" accept=".csv, .xlsx, .xls">
+            <br><br>
+            <button type="Submit File">Upload File</button>
+        </form>
+    </div>
+</body>
+
+</html>

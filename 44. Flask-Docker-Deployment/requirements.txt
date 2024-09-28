@@ -1,0 +1,5 @@
+Flask==2.1.1
+Werkzeug==2.0.3
+scikit-learn==1.5.2
+pandas
+joblib>=1.2.0

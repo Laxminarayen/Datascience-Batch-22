@@ -1,0 +1,133 @@
+# Flask-Docker-Deployment
+
+This is a Flask-based web application that predicts car prices using a pre-trained machine learning model (`pipe.pkl`). The app is containerized using Docker and can be deployed on multiple platforms, including AWS EC2. This README provides steps for building, pushing, and deploying the app.
+
+---
+
+## Prerequisites
+
+1. Docker installed on your machine.
+2. AWS account and an EC2 instance for deployment.
+3. Docker Hub account for pushing the Docker image.
+
+---
+
+## Project Structure
+
+```bash
+Flask-Car-Price-App/
+├── app.py                # Flask application
+├── requirements.txt      # Python dependencies
+├── Dockerfile            # Dockerfile for creating the Docker image
+├── templates/
+│   ├── index.html        # HTML template for the web app
+│   └── predict.html      # HTML template for prediction results
+└── README.md             # Instructions for building and deploying
+
+
+## Steps for Building, Tagging, and Pushing Docker Image to Docker Hub
+1. Clone the Repository
+    First, clone this repository to your local machine:
+
+    git clone https://github.com/your-github-username/Flask-Car-Price-App.git
+    cd Flask-Car-Price-App
+
+2. Set Up Docker for Cross-Platform Build
+    Ensure you can build for different platforms using Docker’s buildx:
+
+    docker buildx create --use
+
+3. Build the Docker Image
+    Build the Docker image for multiple platforms and tag it as latest:
+
+    docker buildx build --platform linux/amd64,linux/arm64 -t your-dockerhub-username/flask-car-price-app:latest --push .
+
+Explanation:
+
+--platform linux/amd64,linux/arm64: Builds the image for both 64-bit platforms.
+-t your-dockerhub-username/flask-car-price-app:latest: Tags the image as latest.
+--push: Automatically pushes the image to Docker Hub.
+
+4. Log In to Docker Hub
+
+    Make sure you are logged into Docker Hub before pushing the image:
+    
+    docker login
+
+5. Push the Docker Image to Docker Hub
+    
+    If you didn’t use the --push flag during the build, manually push the image:
+
+    docker push your-dockerhub-username/flask-car-price-app:latest
+
+Running the Docker Image Locally
+
+Once the image is built and pushed, you can run it locally to test:
+
+1. Run the Docker Container
+
+    docker run -d -p 5000:5000 your-dockerhub-username/flask-car-price-app:latest
+
+2.  Access the Flask App
+
+    Open your browser and go to:
+
+    http://127.0.0.1:5000
+    
+Deploying the Docker Image on AWS EC2
+
+1. Launch an EC2 Instance
+
+    a. Open the AWS Management Console.
+    b. Navigate to EC2 and click Launch Instance.
+    c. Choose an Amazon Linux 2 AMI (or other compatible AMIs).
+    d. Select at least t2.micro instance type.
+    e. Configure the security group to open port 5000 for inbound traffic (for HTTP access).
+
+2. Connect to Your EC2 Instance
+
+    Use SSH to connect to the EC2 instance:
+    or EC2 console 
+
+3. Install Docker on EC2
+
+    Install Docker on your EC2 instance using the following commands:
+    sudo yum update -y
+    sudo yum install docker -y
+    sudo service docker start
+    sudo usermod -aG docker ec2-user
+
+4. Pull the Docker Image from Docker Hub
+    Once Docker is installed, pull your Docker image from Docker Hub:
+
+    docker pull your-dockerhub-username/flask-car-price-app:latest
+
+5. Run the Docker Container
+    docker run -d -p 5000:5000 your-dockerhub-username/flask-car-price-app:latest
+
+6. Access the Flask App
+    http://<your-ec2-public-ip>:5000
+    
+
+
+DOCKER FILE COMMANDS:
+FROM python:3.11-slim
+
+#define my working directory inside my container
+WORKDIR /app
+
+#COPY Current directory contents into the container 
+COPY . /app
+
+#intall the required packages
+RUN pip install --no-cache-dir -r requirements.txt
+
+#Expose port 5000
+EXPOSE 5000
+
+#Environment variables to tell flask to run correctly inside docker 
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+
+#Command to run the flask application
+CMD ["flask","run"]
